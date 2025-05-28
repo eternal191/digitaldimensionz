@@ -1,6 +1,21 @@
 import { Resend } from 'resend';
+import { readFileSync } from "fs";
+import { join } from "path";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+
+function getEmailTemplate() {
+  try {
+    const templatePath = join(process.cwd(), 'email.html');
+    const template = readFileSync(templatePath, 'utf8');
+    return template;
+  } catch (error) {
+    console.error('Error reading email template:', error);
+    return null;
+  }
+}
+
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -14,13 +29,7 @@ export default async function handler(req, res) {
       from: 'Digital Dimensionz <onboarding@resend.dev>',
       to: ['eternal191@gmail.com'], // Replace with your email
       subject: 'Test new contact form submission with resend',
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-      `,
+      html: getEmailTemplate(),
     });
 
     return res.status(200).json({ success: true, data });
