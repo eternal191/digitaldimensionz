@@ -141,6 +141,7 @@
     // when the form is submitted
     contact_form.validator();
     contact_form.on("submit", function (e) {
+      console.log("form submitted from contactValidator");
       // if the validator does not prevent form submit
       if (!e.isDefaultPrevented()) {
         // POST values in the background the the script URL
@@ -2510,12 +2511,14 @@
     // Styles a map in night mode.
     if (!mapScriptId.length) {
       let GOOGLE_MAP_KEY = "AIzaSyCIsjNhr55gjRXMtw7faMUKGYybQCw8s6s";
+      // Replace the hardcoded value with
+      const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY;
 
       let script = document.createElement("script");
       script.type = "text/javascript";
       script.id = "map_api";
       script.src =
-        "https://maps.googleapis.com/maps/api/js?key=" + GOOGLE_MAP_KEY; //& needed
+        "https://maps.googleapis.com/maps/api/js?key=" + googleMapsApiKey; //& needed
       document.body.appendChild(script);
       GOOGLE_MAP_KEY = script = null;
     }
