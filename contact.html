@@ -505,14 +505,14 @@
           const data = await response.json();
           
           if (data.success) {
-            alert('Message sent successfully!');
+            console.log('Message sent successfully!');
             document.getElementById('contact-form').reset();
           } else {
-            alert('Failed to send message. Please try again.');
+            console.log('Failed to send a message. Please try again.');
           }
         } catch (error) {
           console.error('Error:', error);
-          alert('An error occurred. Please try again later.');
+          console.log('An error occurred. Please try again later.');
         }
       });
     </script>
