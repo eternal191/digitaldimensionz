@@ -147,10 +147,12 @@
         // POST values in the background the the script URL
         $.ajax({
           type: "POST",
-          url: "contact.php",
+          url: "https://digitaldimensionz-eternal191-eternal191s-projects.vercel.app/api/send-email.js",
           data: $(this).serialize(),
           success: function (data) {
             // data = JSON object that contact.php returns
+
+            console.log(data);
 
             // we recieve the type of the message: success x danger and apply it to the
             var messageAlert = "alert-" + data.type;
