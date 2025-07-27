@@ -147,7 +147,7 @@
         // POST values in the background the the script URL
         $.ajax({
           type: "POST",
-          url: "https://digitaldimensionz-eternal191-eternal191s-projects.vercel.app/api/send-email.js",
+          url: "digitaldimensionz-gd5c3vl0j-eternal191s-projects.vercel.app/api/send-email.js",
           data: $(this).serialize(),
           success: function (data) {
             // data = JSON object that contact.php returns
