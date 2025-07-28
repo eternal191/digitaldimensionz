@@ -139,49 +139,36 @@
       return;
     }
     // when the form is submitted
-    contact_form.validator();
-    contact_form.on("submit", function (e) {
+    contact_form.on("submit", async function (e) {
       console.log("form submitted from contactValidator");
-      // if the validator does not prevent form submit
-      if (!e.isDefaultPrevented()) {
-        // POST values in the background the the script URL
-        $.ajax({
-          type: "POST",
-          url: "digitaldimensionz-gd5c3vl0j-eternal191s-projects.vercel.app/api/send-email.js",
-          data: $(this).serialize(),
-          success: function (data) {
-            // data = JSON object that contact.php returns
+      e.preventDefault();
+      
+      const formData = {
+        name: document.getElementById('form_name').value,
+        email: document.getElementById('form_email').value,
+        message: document.getElementById('form_message').value
+      };
 
-            console.log(data);
-
-            // we recieve the type of the message: success x danger and apply it to the
-            var messageAlert = "alert-" + data.type;
-            var messageText = data.message;
-
-            // let's compose Bootstrap alert box HTML
-            var alertBox =
-              '<div class="alert ' +
-              messageAlert +
-              ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
-              messageText +
-              "</div>";
-
-            // If we have messageAlert and messageText
-            if (messageAlert && messageText) {
-              // inject the alert to .messages div in our form
-              contact_form.find(".messages").html(alertBox);
-              // empty the form
-              contact_form[0].reset();
-            }
-            setTimeout(function () {
-              contact_form.find(".messages").html("");
-            }, 3000);
+      try {
+        const response = await fetch('https://digitaldimensionz-eternal191-eternal191s-projects.vercel.app/api/send-email.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-          error: function (error) {
-            console.log(error);
-          },
+          body: JSON.stringify(formData)
         });
-        return false;
+
+        const data = await response.json();
+        
+        if (data.success) {
+          console.log('Message sent successfully!');
+          document.getElementById('contact-form').reset();
+        } else {
+          console.log('Failed to send a message. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        console.log('An error occurred. Please try again later.');
       }
     });
   }
