@@ -150,7 +150,7 @@
       };
 
       try {
-        const response = await fetch('https://digitaldimensionz-eternal191-eternal191s-projects.vercel.app/api/send-email.js', {
+        const response = await fetch('https://digitaldimensionz-eternal191-eternal191s-projects.vercel.app/api/send-email', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
