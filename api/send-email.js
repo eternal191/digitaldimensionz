@@ -1,6 +1,6 @@
-import { Resend } from 'resend';
-import { readFileSync } from "fs";
-import { join } from "path";
+const { Resend } = require('resend');
+const { readFileSync } = require('fs')
+const { join } = require('path');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -17,7 +17,7 @@ function getEmailTemplate() {
 }
 
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
