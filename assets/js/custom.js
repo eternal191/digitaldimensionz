@@ -158,13 +158,14 @@
           body: JSON.stringify(formData)
         });
 
-        const data = await response.json();
-        
-        if (data.success) {
-          console.log('Message sent successfully!');
-          document.getElementById('contact-form').reset();
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          console.log('Email sent successfully!', result.data);
+          // Handle success (show success message, reset form, etc.)
         } else {
-          console.log('Failed to send a message. Please try again.');
+          console.error('Failed to send email:', result.error);
+          // Handle error (show error message, etc.)
         }
       } catch (error) {
         console.error('Error:', error);
