@@ -2,8 +2,7 @@
 node_modules/
 .eslintrc.json
 .htaccess
-package.json
-package-lick.json
+package-lock.json
 assets/.DS_Store
 .DS_Store
 
