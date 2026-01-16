@@ -158,9 +158,16 @@
           body: JSON.stringify(formData)
         });
 
+        if (!response.ok) {
+          const text = await response.text();
+          console.error('Server error:', response.status, text);
+          // Handle error (show error message, etc.)
+          return;
+        }
+
         const result = await response.json();
 
-        if (response.ok && result.success) {
+        if (result.success) {
           console.log('Email sent successfully!', result.data);
           // Handle success (show success message, reset form, etc.)
         } else {
