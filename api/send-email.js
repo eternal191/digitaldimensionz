@@ -1,4 +1,4 @@
-const { Resend } = require('resend');
+const {Resend} = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -8,41 +8,19 @@ function getEmailTemplate(name, email, message) {
     <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>New Contact Form Submission</title>
-        <style>
+           <style>
             body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
             table { border-collapse: collapse; }
         </style>
     </head>
-    <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif;">
-        <!-- Wrapper table for centering -->
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f4f4f4;">
-            <tr>
-                <td align="center" style="padding: 20px 0;">
-                    <!-- Main content table -->
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #ffffff; max-width: 600px;">
-                        <tr>
-                            <td style="padding: 40px 30px;">
-                                <h2 style="color: #333333; font-size: 24px; margin: 0 0 20px 0;">New Contact Form Submission</h2>
-                                <p style="color: #666666; font-size: 16px; line-height: 24px; margin: 0 0 15px 0;">
-                                    <strong style="color: #333333;">Name:</strong> ${name}
-                                </p>
-                                <p style="color: #666666; font-size: 16px; line-height: 24px; margin: 0 0 15px 0;">
-                                    <strong style="color: #333333;">Email:</strong> ${email}
-                                </p>
-                                <p style="color: #333333; font-size: 16px; line-height: 24px; margin: 0 0 10px 0;">
-                                    <strong>Message:</strong>
-                                </p>
-                                <p style="color: #666666; font-size: 16px; line-height: 24px; margin: 0; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #4CAF50;">
-                                    ${message}
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+    <body>
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
     </body>
     </html>
   `;
@@ -62,17 +40,17 @@ module.exports = async function handler(req, res) {
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).json({message: 'Method not allowed'});
   }
 
   try {
-    const { name, email, message } = req.body;
+    const {name, email, message} = req.body;
 
     // Validate required fields
     if (!name || !email || !message) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Missing required fields: name, email, and message are required' 
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields: name, email, and message are required'
       });
     }
 
@@ -83,12 +61,12 @@ module.exports = async function handler(req, res) {
       html: getEmailTemplate(name, email, message),
     });
 
-    return res.status(200).json({ success: true, data });
+    return res.status(200).json({success: true, data});
   } catch (error) {
     console.error('Error sending email:', error);
-    return res.status(500).json({ 
-      success: false, 
-      error: error.message || 'Failed to send email' 
+    return res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to send email'
     });
   }
 } 
